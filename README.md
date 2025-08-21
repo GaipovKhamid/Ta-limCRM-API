@@ -1,7 +1,6 @@
 # CRM for Educational Centers
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue)
-![License](https://img.shields.io/badge/license-MIT-yellow)
 
 A lightweight yet powerful CRM system designed to manage students, courses, and schedules.  
 Built with **Java + Spring Boot**, powered by **PostgreSQL**, and containerized with **Docker** for scalability and easy deployment.
