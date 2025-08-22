@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title th:text="${payment.id == null ? 'Добавить Новый Платеж' : 'Редактировать Платеж'} + ' - Ta\'lim CRM'"></title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <link rel="stylesheet" th:href="@{/css/styleSt.css}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+<header>
+  <div class="container header-content">
+    <div class="logo-area">
+      <h1>Ta'lim CRM</h1>
+    </div>
+    <nav>
+      <ul>
+        <li><a th:href="@{/students/list}">Студенты</a></li>
+        <li><a th:href="@{/group/list}">Группы</a></li>
+        <li><a th:href="@{/teachers/list}">Преподаватели</a></li>
+        <li><a th:href="@{/payment/list}">Отчеты</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <h2 th:text="${payment.id == null ? 'Добавить Новый Платеж' : 'Редактировать Платеж'}"></h2>
+
+  <div th:if="${errorMessage}" class="alert error" th:text="${errorMessage}"></div>
+
+  <form th:action="@{/payment/add}" th:object="${payment}" method="POST" class="student-form">
+    <input type="hidden" th:field="*{id}" />
+
+    <div class="form-group">
+      <label for="studentId">Студент (ID):</label>
+      <select id="studentId" th:field="*{student}" required>
+        <option value="">-- Выберите студента --</option>
+        <option th:each="student : ${students}" th:value="${student.id}"
+                th:text="${student.fullName + ' (ID: ' + student.id + ', Телефон: ' + student.telephone + ')'}"
+                th:selected="${payment.student != null and payment.student == student.id}"></option>
+      </select>
+      <small class="help-text">Выберите студента, от которого поступает платеж.</small>
+    </div>
+
+    <div class="form-group">
+      <label for="amount">Сумма:</label>
+      <input type="number" id="amount" th:field="*{amount}" step="0.01" required placeholder="Например: 342.00">
+      <small class="help-text">Сумма платежа в вашей валюте.</small>
+    </div>
+
+    <div class="form-group">
+      <label for="type">Тип оплаты:</label>
+      <select id="type" th:field="*{type}" required>
+        <option value="">-- Выберите тип --</option>
+        <option th:each="type : ${paymentTypes}" th:value="${type}" th:text="${type}"
+                th:selected="${payment.type != null and payment.type.name() == type.name()}"></option>
+      </select>
+      <small class="help-text">Наличные, карта, перевод и т.д.</small>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn primary accept">Сохранить Платеж</button>
+      <a th:href="@{/payment/list}" class="btn primary cancel">Отмена</a>
+    </div>
+  </form>
+</main>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2025 CRM Учебный Центр. Все права защищены.</p>
+  </div>
+</footer>
+</body>
+</html>

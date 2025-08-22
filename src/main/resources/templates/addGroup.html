@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${group.id == null ? 'Создать новую группу' : 'Редактировать группу'} + ' - Ta\'lim CRM'"></title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/styleSt.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+<header>
+    <div class="container">
+        <h1>Ta'lim CRM</h1>
+        <nav>
+            <ul>
+                <li><a th:href="@{/auth/list}">Студенты</a></li>
+                <li><a th:href="@{/group/list}">Группы</a></li>
+                <li><a th:href="@{/teachers/list}">Преподаватели</a></li>
+                <li><a th:href="@{/payment/list}">Отчеты</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main class="container">
+    <h2 th:text="${group.id == null ? 'Создать Новую Группу' : 'Редактировать Группу'}"></h2>
+
+    <div th:if="${errorMessage}" class="alert error" th:text="${errorMessage}"></div>
+
+    <form th:action="@{/group/add}" th:object="${group}" method="POST" class="student-form">
+        <input type="hidden" th:field="*{id}" />
+
+        <div class="form-group">
+            <label for="groupName">Название группы:</label>
+            <input type="text" id="groupName" th:field="*{groupName}" required placeholder="Например: Frontend Basic A">
+        </div>
+
+        <div class="form-group">
+            <label for="level">Уровень:</label>
+            <select id="level" th:field="*{level}" required>
+                <option value="">-- Выберите уровень --</option>
+                <option th:each="level : ${levels}" th:value="${level}" th:text="${level}"
+                        th:selected="${group.level != null and group.level.name() == level.name()}"></option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="teacherId">Преподаватель:</label>
+            <select id="teacherId" th:field="*{teacherId}" required>
+                <option value="">-- Выберите преподавателя --</option>
+                <option th:each="teacher : ${teachers}" th:value="${teacher.id}" th:text="${teacher.fullName}"
+                        th:selected="${group.teacherId != null and group.teacherId == teacher.id}"></option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="schedule">Расписание:</label>
+            <input type="text" id="schedule" th:field="*{schedule}" required placeholder="Например: Пн, Ср, Пт 18:00-20:00">
+        </div>
+
+        <div class="form-group">
+            <label for="price">Цена:</label>
+            <input type="number" id="price" th:field="*{price}" step="0.01" required placeholder="Например: 500000.00">
+        </div>
+
+        <div class="form-group">
+            <label for="max_students">Максимальное количество студентов:</label>
+            <input type="number" id="max_students" th:field="*{max_students}" min="1" max="50" placeholder="30">
+            <small class="help-text">Максимальное число студентов в группе.</small>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn primary accept">Сохранить Группу</button>
+            <a th:href="@{/group/list}" class="btn primary cancel ">Отмена</a>
+        </div>
+    </form>
+</main>
+
+<footer>
+    <div class="container">
+        <p>&copy; 2025 CRM Учебный Центр. Все права защищены.</p>
+    </div>
+</footer>
+</body>
+</html>

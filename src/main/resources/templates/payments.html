@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Список Платяжей - Ta'lim CRM</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <link rel="stylesheet" th:href="@{/css/styleSt.css}"> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+<header>
+  <div class="container"> <h1>Ta'lim CRM</h1>
+    <nav>
+      <ul>
+        <li><a th:href="@{/auth/list}">Студенты</a></li>
+        <li><a th:href="@{/group/list}">Группы</a></li>
+        <li><a th:href="@{/teachers/list}">Преподаватели</a></li>
+        <li><a th:href="@{/payment/list}">Отчеты</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <h2>Список Платяжей</h2>
+
+  <div th:if="${successMessage}" class="alert success" th:text="${successMessage}"></div>
+  <div th:if="${errorMessage}" class="alert error" th:text="${errorMessage}"></div>
+
+  <div class="actions">
+    <a th:href="@{/payment/add}" class="btn primary">Добавить новую оплату</a>
+  </div>
+
+  <table class="data-table">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Student </th>
+      <th>Amount</th>
+      <th>Type</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="payment : ${payments}">
+      <td th:text="${payment.id}">1</td>
+      <td th:text="${payment.student}">Иванов Иван</td>
+      <td th:text="${payment.amount}">+998901234567</td>
+      <td th:text="${payment.type}">85</td>
+    </tbody>
+  </table>
+</main>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2025 CRM Учебный Центр. Все права защищены.</p>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"> <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRM для Учебных Центров</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/styleSt.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+<header>
+    <div class="container">
+        <h1>Ta'lim CRM</h1>
+        <nav>
+            <ul>
+                <li><a th:href="@{/auth/list}">Студенты</a></li>
+                <li><a th:href="@{/group/list}">Группы</a></li>
+                <li><a th:href="@{/teachers/list}">Преподаватели</a></li>
+                <li><a th:href="@{/payment/list}">Отчеты</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main class="container">
+    <h2>Добро пожаловать в панель управления!</h2>
+    <div class="dashboard-widgets">
+        <div class="widget">
+            <h3>Всего студентов</h3>
+            <p>150</p>
+        </div>
+        <div class="widget">
+            <h3>Активных курсов</h3>
+            <p>12</p>
+        </div>
+        <div class="widget">
+            <h3>Преподавателей</h3>
+            <p>8</p>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <div class="container">
+        <p>&copy; 2025 CRM Учебный Центр. Все права защищены.</p>
+    </div>
+</footer>
+</body>
+</html>

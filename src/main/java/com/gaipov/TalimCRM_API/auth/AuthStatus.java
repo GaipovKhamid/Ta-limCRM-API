@@ -1,4 +1,0 @@
-package com.gaipov.TalimCRM_API.auth;
-
-public enum AuthStatus {
-}

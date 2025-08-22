@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Список групп - Ta'lim CRM</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <link rel="stylesheet" th:href="@{/css/styleSt.css}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>Ta'lim CRM</h1>
+    <nav>
+      <ul>
+        <li><a th:href="@{/auth/list}">Студенты</a></li>
+        <li><a th:href="@{/group/list}">Группы</a></li>
+        <li><a th:href="@{/teachers/list}">Преподаватели</a></li>
+        <li><a th:href="@{/payment/list}">Отчеты</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <h2>Список Групп</h2>
+
+  <div th:if="${successMessage}" class="alert success" th:text="${successMessage}"></div>
+  <div th:if="${errorMessage}" class="alert error" th:text="${errorMessage}"></div>
+
+  <div class="actions">
+    <a th:href="@{/group/add}" class="btn primary">Добавить новую группу</a>
+  </div>
+
+  <table class="data-table">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Название группы</th>
+      <th>Уровень</th>
+      <th>Преподаватель</th>
+      <th>Расписание</th>
+      <th>Цена</th>
+      <th>Макс. студентов</th>
+      <th>Действия</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="group : ${groups}">
+      <td th:text="${group.id}">1</td>
+      <td th:text="${group.groupName}">Frontend Basic A</td>
+      <td th:text="${group.level}">BEGINNER</td>
+      <td th:text="${group.teacherEntity != null ? group.teacherEntity.fullName : 'Не назначен'}">Ахмедов Д.</td>
+      <td th:text="${group.schedule}">Пн, Ср, Пт 18:00-20:00</td>
+      <td th:text="${group.price}">500000.00</td>
+      <td th:text="${group.max_students}">30</td>
+      <td>
+        <a th:href="@{/group/edit/{id}(id=${group.id})}" class="btn small edit"><i class="fas fa-edit"></i></a>
+        <a th:href="@{/group/delete/{id}(id=${group.id})}" class="btn small delete"
+           onclick="return confirm('Вы уверены, что хотите удалить эту группу?');">
+          <i class="fas fa-trash-alt"></i>
+        </a>
+      </td>
+    </tr>
+    <tr th:if="${#lists.isEmpty(groups)}">
+      <td colspan="8">Нет доступных групп.</td>
+    </tr>
+    </tbody>
+  </table>
+</main>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2025 CRM Учебный Центр. Все права защищены.</p>
+  </div>
+</footer>
+</body>
+</html>
