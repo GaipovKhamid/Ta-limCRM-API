@@ -2,7 +2,7 @@ package com.gaipov.TalimCRM_API.auth;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -12,13 +12,13 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class AuthService {
     final AuthRepository authRepository;
-    final BCryptPasswordEncoder bCryptPasswordEncoder;
+    final PasswordEncoder passwordEncoder;
 
     public AuthEntity register(AuthDto dto) {
         AuthEntity entity = AuthEntity.builder()
                 .fullName(dto.getFullName())
                 .phoneNum(dto.getPhoneNum())
-                .password(bCryptPasswordEncoder.encode(dto.getPassword()))
+                .password(passwordEncoder.encode(dto.getPassword()))
                 .roles(dto.getRoles())
                 .createdAt(LocalDateTime.now())
                 .build();
