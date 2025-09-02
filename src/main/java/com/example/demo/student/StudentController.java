@@ -18,7 +18,6 @@ public class StudentController {
 
     @Autowired
     AuthService authService; // Используем AuthService, который содержит логику работы со студентами
-
     // Метод для отображения списка студентов
     // GET /students/list
     @Operation(summary = "Получить список всех студентов")

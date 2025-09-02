@@ -19,8 +19,8 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity // Для аннотаций @PreAuthorize
 public class SecurityConfig {
 
-    @Autowired
-    private UserDetailsService userDetailsService;
+//    @Autowired
+//    private UserDetailsService userDetailsService;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -28,32 +28,9 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService);
-        authProvider.setPasswordEncoder(passwordEncoder()); // Убедись, что этот метод вызывается
-        return authProvider;
-    }
-
-    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // Отключаем CSRF для удобства разработки
-                .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/login", "/css/**", "/images/**").permitAll() // Разрешаем доступ к странице логина и статическим ресурсам
-                        .requestMatchers("/admin/**").hasRole("SUPER_ADMIN") // Только SuperAdmin может управлять админами
-                        .anyRequest().authenticated() // Все остальные запросы требуют аутентификации
-                )
-                .formLogin(form -> form
-                        .loginPage("/login")
-                        .defaultSuccessUrl("/students/list", true) // Перенаправляем на список студентов после успешного входа
-                        .permitAll()
-                )
-                .logout(logout -> logout
-                        .logoutUrl("/logout")
-                        .logoutSuccessUrl("/login?logout") // Перенаправляем на страницу логина после выхода
-                        .permitAll()
-                );
+                .csrf(csrf -> csrf.disable());// Отключаем CSRF для удобства разработки
         return http.build();
     }
 }
